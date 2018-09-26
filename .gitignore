@@ -1,0 +1,5 @@
+node_modules/*
+# public/*
+# !public/images/
+# !public/index.html
+# !public/fonts/
