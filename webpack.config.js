@@ -20,20 +20,10 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        
         use: [
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
-          }
+          'style-loader',
+          'css-loader',
+          'sass-loader'
         ]
       }
     ]
@@ -45,8 +35,11 @@ module.exports = {
     // })
   ],
   devtool: 'inline-source-map',
-   devServer: {
-     contentBase: path.join(__dirname, 'public'),
-     historyApiFallback: true
-   }
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    historyApiFallback: true
+  },
+  performance: {
+    hints: process.env.NODE_ENV === 'production' ? "warning" : false
+  }
 };
