@@ -2,7 +2,7 @@ import { FETCH_TWEETS } from './types';
 
 export const fetchTweets = (searchText) => dispatch => {
     console.log('I am here------------')
-    fetch('http://35.200.145.96:1337/test?searchText='+searchText,{mode: "cors"})
+    fetch('http://35.200.145.96:1337/getTweets?searchText='+searchText,{mode: "cors"})
     .then(response => response.json())
     .then(posts => {
         dispatch({
