@@ -3,6 +3,7 @@ import Header from './Header'
 import Tweet from './Tweet'
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import Notifier, { openSnackbar } from '../Partials/Notifier';
 
 class TweetBox extends React.Component {
     constructor(props) {
@@ -14,12 +15,14 @@ class TweetBox extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps.tweets);
-        this.setState({
-            tweets : nextProps.tweets
-        },()=>{
-            console.log(this.state);
-        })
+        // console.log(nextProps.tweets);
+        if(nextProps.tweets.length == 0){
+            openSnackbar({message : 'No Tweets Found for this search!!!'});
+        }else{
+            this.setState({
+                tweets : nextProps.tweets
+            })
+        }
     }
 
     loadNext = () => {
@@ -32,7 +35,7 @@ class TweetBox extends React.Component {
 
     render() {
         var tweets = this.state.tweets;
-        var visibleTweets = tweets.slice(this.state.currentPage*10, this.state.currentPage*10 + 8);
+        var visibleTweets = tweets.slice(0, this.state.currentPage*8 + 8);
         return (
             <div>
                 <div style={{display : 'flex', justifyContent : 'space-between', flexWrap : 'wrap'}}>
@@ -47,10 +50,11 @@ class TweetBox extends React.Component {
                     )}
                     
                 </div>
-                {visibleTweets.length > 0 ? 
+                {visibleTweets.length > 0 && visibleTweets.length < this.state.tweets.length ? 
                     <Button style={{float : 'right', margin : '10px'}} onClick={this.loadNext} variant="contained">Load More...</Button> 
                     : null
                 }
+                <Notifier/>
             </div>
         );
     }

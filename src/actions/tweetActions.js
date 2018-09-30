@@ -1,8 +1,9 @@
 import { FETCH_TWEETS } from './types';
 
+const baseURL = process.env.NODE_ENV == 'production' ? 'http://35.200.145.96:1337/' : 'http://localhost:1337/';
+
 export const fetchTweets = (searchText) => dispatch => {
-    console.log('I am here------------')
-    fetch('http://35.200.145.96:1337/getTweets?searchText='+searchText,{mode: "cors"})
+    fetch(baseURL + 'getTweets?searchText=' + searchText, {mode: "cors"})
     .then(response => response.json())
     .then(posts => {
         dispatch({
